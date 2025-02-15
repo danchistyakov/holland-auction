@@ -12,7 +12,14 @@ class DutchAuction:
             start_price, min_price, decrement, interval = lot
             current_price = start_price
             print(f"Аукцион начался! Лот: {lot}, начальная цена: {current_price}")
+            print("Купить за эту цену? (ответ только 'Да')")
+            sys.stdout.flush()
 
+            ready, _, _ = select.select([sys.stdin], [], [], 2)
+            if ready:
+                response = sys.stdin.readline().strip()
+                if response == "Да":
+                    print(f"Товар продан за {current_price}!")
             while current_price > min_price:
                 time.sleep(interval)
                 current_price -= decrement
